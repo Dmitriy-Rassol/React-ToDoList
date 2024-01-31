@@ -18,8 +18,9 @@ function AddTodoModal({ onAdd, onCancel }) {
     } else {
       inputRef.current.focus();
       inputRef.current.placeholder = 'Введите название задачи';
+      inputRef.current.style.placeholderColor = 'red';
     }
-  };
+  }
 
   const handleCancelClick = () => {
     onCancel();

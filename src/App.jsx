@@ -2,7 +2,7 @@ import TodoList from "./Components/TodoList/TodoList.jsx";
 import AddTodoModal from "./Components/AddTodoModal/AddTodoModal.jsx";
 import "./App.css";
 
-import { useState, useMemo, useCallback, useRef, useLayoutEffect } from "react";
+import { useState, useMemo, useCallback, useRef, useLayoutEffect, useEffect } from "react";
 
 function App() {
   const [todos, setTodos] = useState([]);
@@ -54,6 +54,18 @@ function App() {
     [todos]
   );
 
+  useEffect(() => {
+    const savedTasks = localStorage.getItem('tasks');
+    if (savedTasks) {
+      setTodos(JSON.parse(savedTasks));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (todos.length)  localStorage.setItem('tasks', JSON.stringify(todos));
+  }, [todos]);
+
+
   useLayoutEffect(() => {
     modalRef.current = showAddModal;
     return () => {
@@ -64,11 +76,11 @@ function App() {
   return (
     <div className="App">
       <h1>Приложение для управления задачами</h1>
-      <button onClick={handleAddButtonClick}>Добавить задачу</button>{" "}
       {memoizedTodoList}
       {showAddModal && (
         <AddTodoModal onAdd={handleAddTodo} onCancel={handleCancelAdd} />
-      )}
+      )}{" "}
+      <button onClick={handleAddButtonClick}>Добавить задачу</button>
     </div>
   );
 }

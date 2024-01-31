@@ -1,6 +1,15 @@
+import { useEffect, useState } from "react";
 import "./TodoList.scss";
 
 function TodoList({ todos, onDelete, onStatusChange }) {
+const [isContent, setIsContent] = useState(false);
+
+useEffect(() => {
+  if(todos.length) {
+    setIsContent(true)
+  }
+},[todos])
+
   const handleDelete = (index) => {
     onDelete(index);
   };
@@ -12,13 +21,15 @@ function TodoList({ todos, onDelete, onStatusChange }) {
   return (
     <div>
       <h2>Список задач</h2>
-      <ul className="todo-list">
+      
+     {isContent && <ul className="todo-list">
         {todos.map((todo, index) => (
-          <li className="todo-list__item"
+          <li
+            className="todo-list__item"
             key={index}
-            style={{ textDecoration: todo.completed ? "line-through" : "none" }}
+           
           >
-            <label htmlFor={`todoId-${index}`}>
+            <label className="custom-checkbox" htmlFor={`todoId-${index}`} style={{ textDecoration: todo.completed ? "line-through" : "none" }}>
               <input
                 type="checkbox"
                 checked={todo.completed}
@@ -26,13 +37,13 @@ function TodoList({ todos, onDelete, onStatusChange }) {
                 id={`todoId-${index}`}
                 name={`todoId-${index}`}
               />
-              {todo.title}
+              {todo.title}<span className="checkmark"></span>
             </label>
 
             <button onClick={() => handleDelete(index)}>Удалить</button>
           </li>
         ))}
-      </ul>
+      </ul>} 
     </div>
   );
 }

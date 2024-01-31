@@ -4,7 +4,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(247, 247, 247, 0.705);
+  background-color: rgba(255, 255, 255, 0.575);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -27,16 +27,12 @@
       border-radius: 5px;
       border: #fff solid 1px;
       width: 100%;
-      padding: 0 5px;
+      padding: 0 15px;
+      color:#2b2b2b;
 
       &::placeholder {
         font-weight: 600;
       }
-    }
-
-    & button {
-        color: #213547;
-        background-color: #ffffff;
     }
   }
 
@@ -52,6 +48,10 @@
   top: 10px;
   right: 10px;
   padding: 0;
+  &:hover {
+    border: 1px solid transparent;
+    opacity: 0.9;
+  }
   & img {
     width: 24px;
   }
