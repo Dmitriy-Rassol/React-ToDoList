@@ -7,6 +7,8 @@ const [isContent, setIsContent] = useState(false);
 useEffect(() => {
   if(todos.length) {
     setIsContent(true)
+  } else {
+    setIsContent(false);
   }
 },[todos])
 
@@ -39,7 +41,7 @@ useEffect(() => {
               />
               {todo.title}<span className="checkmark"></span>
             </label>
-
+<p>{todo.time}</p>
             <button onClick={() => handleDelete(index)}>Удалить</button>
           </li>
         ))}

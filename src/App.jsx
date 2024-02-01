@@ -1,17 +1,40 @@
 import TodoList from "./Components/TodoList/TodoList.jsx";
 import AddTodoModal from "./Components/AddTodoModal/AddTodoModal.jsx";
 import "./App.css";
+import addTask from "./assets/addTask.png";
 
-import { useState, useMemo, useCallback, useRef, useLayoutEffect, useEffect } from "react";
+import {
+  useState,
+  useMemo,
+  useCallback,
+  useRef,
+  useLayoutEffect,
+  useEffect,
+} from "react";
 
 function App() {
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState(() => {
+    const savedTodos = localStorage.getItem("todos");
+    if (savedTodos) {
+      return JSON.parse(savedTodos);
+    } else {
+      return [];
+    }
+  });
   const [showAddModal, setShowAddModal] = useState(false);
+  const [currentTime] = useState(new Date());
   const modalRef = useRef(null);
 
   const handleAddTodo = useCallback(
     (newTodo, status) => {
-      setTodos([...todos, { title: newTodo, completed: status }]);
+      setTodos([
+        ...todos,
+        {
+          title: newTodo,
+          completed: status,
+          time: currentTime.toLocaleString(),
+        },
+      ]);
       setShowAddModal(false);
     },
     [todos]
@@ -55,16 +78,8 @@ function App() {
   );
 
   useEffect(() => {
-    const savedTasks = localStorage.getItem('tasks');
-    if (savedTasks) {
-      setTodos(JSON.parse(savedTasks));
-    }
-  }, []);
-
-  useEffect(() => {
-    if (todos.length)  localStorage.setItem('tasks', JSON.stringify(todos));
+      localStorage.setItem('todos', JSON.stringify(todos));
   }, [todos]);
-
 
   useLayoutEffect(() => {
     modalRef.current = showAddModal;
@@ -80,7 +95,9 @@ function App() {
       {showAddModal && (
         <AddTodoModal onAdd={handleAddTodo} onCancel={handleCancelAdd} />
       )}{" "}
-      <button onClick={handleAddButtonClick}>Добавить задачу</button>
+      <button className="btn-add" onClick={handleAddButtonClick}>
+        <img src={addTask} alt="добавить задачу" />
+      </button>
     </div>
   );
 }

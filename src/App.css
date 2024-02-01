@@ -29,3 +29,13 @@
 .read-the-docs {
   color: #888;
 }
+
+.btn-add {
+  padding: 5px 20px;
+  border-radius: 10px;
+  position: relative;
+  display: inline-flex;
+  align-items:center;
+  justify-content:center;
+  z-index: 0;
+}
